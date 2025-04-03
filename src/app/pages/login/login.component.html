@@ -1,0 +1,61 @@
+<div class="min-h-screen flex justify-center items-center bg-gradient-to-tr from-slate-100 via-white to-slate-100">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-[#D1D5DB]">
+    <h2 class="text-center text-2xl font-bold text-[#1F2937] mb-4">Nombre o Logo</h2>
+    <p class="text-center text-gray-600 mb-6">Inicia sesión para continuar</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+      <!-- Usuario -->
+      <div>
+        <label class="block text-sm font-medium text-[#1F2937] mb-1">Usuario</label>
+        <input
+          type="email"
+          formControlName="usuario"
+          placeholder="Correo electrónico"
+          class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#1E3A8A] focus:outline-none"
+        />
+        <div *ngIf="form.get('usuario')?.touched && form.get('usuario')?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="form.get('usuario')?.errors?.['required']">El correo es obligatorio.</span>
+          <span *ngIf="form.get('usuario')?.errors?.['email']">Formato de correo inválido.</span>
+        </div>
+      </div>
+
+      <!-- Contraseña -->
+      <div>
+        <label class="block text-sm font-medium text-[#1F2937] mb-1">Contraseña</label>
+        <input
+          type="password"
+          formControlName="contrasena"
+          placeholder="********"
+          class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#1E3A8A] focus:outline-none"
+        />
+        <div *ngIf="form.get('contrasena')?.touched && form.get('contrasena')?.invalid" class="text-red-500 text-sm mt-1">
+          <span>La contraseña es obligatoria.</span>
+        </div>
+      </div>
+
+      <!-- Recordarme -->
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          formControlName="recordarme"
+          class="accent-[#1E3A8A] mr-2"
+        />
+        <label class="text-sm text-[#1F2937]">Recordarme</label>
+      </div>
+
+      <!-- Botón -->
+      <button
+        type="submit"
+        class="w-full bg-[#1E3A8A] hover:bg-[#1E40AF] text-white p-3 rounded-lg font-semibold transition"
+      >
+        Iniciar sesión
+      </button>
+    </form>
+
+    <!-- Links -->
+    <div class="mt-4 text-sm text-center">
+      <a href="#" class="text-[#1E3A8A] hover:underline block">¿Olvidaste tu contraseña?</a>
+      <a href="#" class="text-[#1E3A8A] hover:underline block">¿No tienes cuenta? Regístrate</a>
+    </div>
+  </div>
+</div>

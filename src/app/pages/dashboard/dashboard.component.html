@@ -1,0 +1,139 @@
+<div class="p-6 sm:p-8 max-w-3xl mx-auto bg-white rounded-xl shadow border border-[#D1D5DB]">
+  <h1 class="text-2xl font-bold text-[#1E3A8A] mb-6 text-center">Estimación de Proyecto</h1>
+
+  <form [formGroup]="estimacionForm" (ngSubmit)="calcular()" class="grid gap-6">
+    <!-- Datos del cliente -->
+    <div>
+      <label class="block text-sm font-semibold text-[#1F2937] mb-1">Nombre del cliente</label>
+      <input formControlName="nombre" class="w-full p-3 border rounded focus:ring-2 focus:ring-[#1E3A8A]" placeholder="Ej: Juan Pérez" [ngClass]="{'border-[#EF4444]': formControlInvalido('nombre')}" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-semibold text-[#1F2937] mb-1">Teléfono</label>
+      <input formControlName="telefono" class="w-full p-3 border rounded focus:ring-2 focus:ring-[#1E3A8A]" placeholder="(123) 456-7890" [ngClass]="{'border-[#EF4444]': formControlInvalido('telefono')}" />
+    </div>
+
+    <!-- Proyecto -->
+    <div>
+      <label class="block text-sm font-semibold text-[#1F2937] mb-1">Tipo de proyecto</label>
+      <select formControlName="tipoProyecto" class="w-full p-3 border rounded" [ngClass]="{'border-[#EF4444]': formControlInvalido('tipoProyecto')}">
+        <option value="" disabled selected>Seleccione</option>
+        <option value="nueva">Nueva construcción</option>
+        <option value="remodelacion">Remodelación</option>
+      </select>
+    </div>
+
+    <!-- Unidades -->
+    <div>
+      <label class="block text-sm font-semibold text-[#1F2937] mb-1">Unidad de medida</label>
+      <div class="flex gap-4">
+        <label class="flex items-center gap-2">
+          <input type="radio" formControlName="unidad" value="ft" class="accent-[#1E3A8A]" />
+          ft²
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" formControlName="unidad" value="m" class="accent-[#1E3A8A]" />
+          m²
+        </label>
+      </div>
+    </div>
+
+    <!-- Área -->
+    <div>
+      <label class="block text-sm font-semibold text-[#1F2937] mb-1">Área del proyecto</label>
+      <input type="number" formControlName="area" class="w-full p-3 border rounded" placeholder="Ej: 150" [ngClass]="{'border-[#EF4444]': formControlInvalido('area')}" />
+    </div>
+
+    <!-- Acabado -->
+    <div>
+      <label class="block text-sm font-semibold text-[#1F2937] mb-1">Tipo de acabado</label>
+      <select formControlName="acabado" class="w-full p-3 border rounded" [ngClass]="{'border-[#EF4444]': formControlInvalido('acabado')}">
+        <option value="" disabled selected>Seleccione</option>
+        <option value="basico">Básico</option>
+        <option value="medio">Medio</option>
+        <option value="premium">Premium</option>
+      </select>
+    </div>
+
+    <!-- Ubicación -->
+    <div>
+      <label class="block text-sm font-semibold text-[#1F2937] mb-1">Ubicación</label>
+      <input formControlName="ubicacion" class="w-full p-3 border rounded" placeholder="Ciudad / Estado" [ngClass]="{'border-[#EF4444]': formControlInvalido('ubicacion')}" />
+    </div>
+
+    <!-- Detalles del trabajo -->
+    <div>
+      <label class="block text-sm font-semibold text-[#1F2937] mb-1">Detalles del trabajo</label>
+      <textarea formControlName="detallesTrabajo" rows="4" placeholder="Ej: Remodelación de cocina con cambio de cerámica, instalación de muebles y pintura general." class="w-full p-3 border rounded resize-none text-[#1F2937]"></textarea>
+    </div>
+
+    <!-- Tareas específicas -->
+    <div>
+      <label class="block text-sm font-semibold text-[#1F2937] mb-1">Tareas específicas</label>
+      <div formGroupName="tareas" class="grid grid-cols-2 gap-2">
+        <label class="inline-flex items-center gap-2 text-[#1F2937]">
+          <input type="checkbox" formControlName="electricidad" class="accent-[#1E3A8A]" />
+          Electricidad
+        </label>
+        <label class="inline-flex items-center gap-2 text-[#1F2937]">
+          <input type="checkbox" formControlName="plomeria" class="accent-[#1E3A8A]" />
+          Plomería
+        </label>
+        <label class="inline-flex items-center gap-2 text-[#1F2937]">
+          <input type="checkbox" formControlName="pintura" class="accent-[#1E3A8A]" />
+          Pintura
+        </label>
+        <label class="inline-flex items-center gap-2 text-[#1F2937]">
+          <input type="checkbox" formControlName="albanileria" class="accent-[#1E3A8A]" />
+          Albañilería
+        </label>
+        <label class="inline-flex items-center gap-2 text-[#1F2937]">
+          <input type="checkbox" formControlName="carpinteria" class="accent-[#1E3A8A]" />
+          Carpintería
+        </label>
+      </div>
+      <input type="text" formControlName="otros" class="mt-2 w-full p-3 border rounded text-[#1F2937]" placeholder="Otras tareas..." />
+    </div>
+
+    <!-- Observaciones -->
+    <div>
+      <label class="block text-sm font-semibold text-[#1F2937] mb-1">Observaciones</label>
+      <textarea formControlName="observaciones" rows="3" placeholder="Información adicional..." class="w-full p-3 border rounded resize-none text-[#1F2937]"></textarea>
+    </div>
+
+    <!-- Botón calcular -->
+    <button type="submit" class="w-full bg-[#1E3A8A] hover:bg-[#1E40AF] text-white p-3 rounded font-semibold transition-all duration-300">
+      Calcular estimado
+    </button>
+  </form>
+
+  <!-- Resultado -->
+  <div *ngIf="resultado" id="resumen-estimado" class="mt-8 p-4 rounded-lg bg-[#D1FAE5] text-[#065F46] border border-[#10B981] transition-all duration-300 ease-in-out">
+    <h2 class="font-bold mb-2">Resultado del estimado</h2>
+    <p><strong>Total estimado:</strong> {{ resultado.total | currency:'USD' }}</p>
+    <p><strong>Tiempo estimado:</strong> {{ resultado.tiempo }} días</p>
+    <p><strong>Unidad:</strong> {{ resultado.unidad }}</p>
+
+    <p><strong>Detalles del trabajo:</strong> {{ estimacionForm.value.detallesTrabajo }}</p>
+
+    <p><strong>Tareas seleccionadas:</strong></p>
+    <ul class="list-disc pl-5">
+      <li *ngIf="estimacionForm.value.tareas.electricidad">Electricidad</li>
+      <li *ngIf="estimacionForm.value.tareas.plomeria">Plomería</li>
+      <li *ngIf="estimacionForm.value.tareas.pintura">Pintura</li>
+      <li *ngIf="estimacionForm.value.tareas.albanileria">Albañilería</li>
+      <li *ngIf="estimacionForm.value.tareas.carpinteria">Carpintería</li>
+      <li *ngIf="estimacionForm.value.tareas.otros">Otros: {{ estimacionForm.value.tareas.otros }}</li>
+    </ul>
+
+    <p class="mt-2"><strong>Observaciones:</strong> {{ estimacionForm.value.observaciones }}</p>
+
+    <div *ngIf="resultado.nota" class="mt-3 text-sm text-[#B45309] bg-[#FEF3C7] border border-[#FBBF24] p-3 rounded">
+      {{ resultado.nota }}
+    </div>
+
+    <button (click)="descargarPDF()" class="mt-4 bg-[#FBBF24] hover:bg-[#F59E0B] text-white p-2 rounded font-semibold">
+      Descargar resumen PDF
+    </button>
+  </div>
+</div>
